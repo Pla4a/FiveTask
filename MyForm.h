@@ -642,14 +642,17 @@ private: System::Void цветФонаГрафикаToolStripMenuItem_Click(Syst
 	}
 }
 private: System::Void сохранитьДанныеТаблицыВФайлCtrlSToolStripMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
+	MyForm1^ f = gcnew MyForm1();
 	SaveFileDialog^ saveFileDialog1 = gcnew SaveFileDialog();
 	saveFileDialog1->Filter = "Text Files|*.txt";
-	saveFileDialog1->FilterIndex = 2; saveFileDialog1 -> RestoreDirectory = true; 
-	if (saveFileDialog1->ShowDialog() == System::Windows::Forms:: DialogResult::OK)
+	saveFileDialog1->FilterIndex = 2;
+	saveFileDialog1->RestoreDirectory = true;
+	if (saveFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::OK)
 	{
-		StreamWriter^ pwriter = gcnew StreamWriter(saveFileDialog1->FileName);
-		for (int i = 0; i < dataGridView1->RowCount; i++) pwriter -> WriteLine(dataGridView1->Rows[i]->Cells[0]->Value->ToString() + "| "+dataGridView1->Rows[i]->Cells[1]->Value->ToString());
-			pwriter->Close();
+		System::IO::StreamWriter^ pwriter = gcnew System::IO::StreamWriter(saveFileDialog1->FileName);
+		for (int i = 0; i < dataGridView1->RowCount; i++)
+			pwriter->WriteLine(dataGridView1->Rows[i]->Cells[0]->Value->ToString() + "| " + dataGridView1->Rows[i]->Cells[1]->Value->ToString());
+		pwriter->Close();
 	}
 }
 private: System::Void textBox1_Leave(System::Object^ sender, System::EventArgs^ e) {
@@ -741,35 +744,6 @@ private: System::Void textBox2_Leave_1(System::Object^ sender, System::EventArgs
 		//âîçâðàò ôîêóñà òåêñòîâîìó ïîëþ this->textBox1->Focus();
 	}
 }
-private: System::Void textBox2_Leave(System::Object^ sender, System::EventArgs^ e) {
-	int l, t, k; bool a = true; String^ str; str = textBox2->Text;
-	l = str->Length;
-	//èíäåêñ ñèìâîëà, ñ êîòîðûì ðàáîòàåì
-	t = 0;
-	//êîëëè÷åñòâî çàïÿòûõ â ñòðîêå (äàáû èçáåæàòü âàðèàíòà 0, 2384, 1254, 1251 – ýòî íå ÷èñëî) 
-	k = 0;
-	//äâèãàåì èíäåêñàòîð, åñëè íàøå ÷èñëî îòðèöàòåëüíîå 
-	if (str[t] == '-') t++;
-	//÷èñëî íå ìîæåò íà÷èíàòüñÿ ñ çàïÿòîé 
-	if (str[t] == ',') a = false; while (t < l)
-	{
-		if (str[t] == ',')
-			//åñëè çàïÿòàÿ ñòîèò ïîñëåäíèì ñèìâîëîì èëè çàïÿòàÿ óæå áûëà íàéäåíà
-
-		{
-			if (t == l - 1 || k > 0) a = false; k++;
-		}
-
-		//åñëè t-ûé ñèìâîë íå ëåæèò â äèàïàçîíå îò '0' äî '9'
-
-		else if (str[t] < '0' || str[t]>'9') a = false; t++;
-	}
-	if (a == false)
-	{
-		MessageBox::Show("ïàðàìåòð Õ íå ÿâëÿåòñÿ ÷èñëîì", "Îøèáêà ââîäà äàííûõ", MessageBoxButtons::OK, MessageBoxIcon::Exclamation);
-		//âîçâðàò ôîêóñà òåêñòîâîìó ïîëþ this->textBox2->Focus();
-	}
-}
 private: System::Void textBox3_Leave(System::Object^ sender, System::EventArgs^ e) {
 	int l, t, k; bool a = true; String^ str; str = textBox1->Text;
 	l = str->Length;
@@ -800,35 +774,6 @@ private: System::Void textBox3_Leave(System::Object^ sender, System::EventArgs^ 
 		//âîçâðàò ôîêóñà òåêñòîâîìó ïîëþ this->textBox1->Focus();
 	}
 }
-private: System::Void textBox2_Leave(System::Object^ sender, System::EventArgs^ e) {
-	int l, t, k; bool a = true; String^ str; str = textBox2->Text;
-	l = str->Length;
-	//èíäåêñ ñèìâîëà, ñ êîòîðûì ðàáîòàåì
-	t = 0;
-	//êîëëè÷åñòâî çàïÿòûõ â ñòðîêå (äàáû èçáåæàòü âàðèàíòà 0, 2384, 1254, 1251 – ýòî íå ÷èñëî) 
-	k = 0;
-	//äâèãàåì èíäåêñàòîð, åñëè íàøå ÷èñëî îòðèöàòåëüíîå 
-	if (str[t] == '-') t++;
-	//÷èñëî íå ìîæåò íà÷èíàòüñÿ ñ çàïÿòîé 
-	if (str[t] == ',') a = false; while (t < l)
-	{
-		if (str[t] == ',')
-			//åñëè çàïÿòàÿ ñòîèò ïîñëåäíèì ñèìâîëîì èëè çàïÿòàÿ óæå áûëà íàéäåíà
-
-		{
-			if (t == l - 1 || k > 0) a = false; k++;
-		}
-
-		//åñëè t-ûé ñèìâîë íå ëåæèò â äèàïàçîíå îò '0' äî '9'
-
-		else if (str[t] < '0' || str[t]>'9') a = false; t++;
-	}
-	if (a == false)
-	{
-		MessageBox::Show("ïàðàìåòð Õ íå ÿâëÿåòñÿ ÷èñëîì", "Îøèáêà ââîäà äàííûõ", MessageBoxButtons::OK, MessageBoxIcon::Exclamation);
-		//âîçâðàò ôîêóñà òåêñòîâîìó ïîëþ this->textBox2->Focus();
-	}
-}
 private: System::Void textBox4_Leave(System::Object^ sender, System::EventArgs^ e) {
 	int l, t, k; bool a = true; String^ str; str = textBox1->Text;
 	l = str->Length;
@@ -857,35 +802,6 @@ private: System::Void textBox4_Leave(System::Object^ sender, System::EventArgs^ 
 	{
 		MessageBox::Show("ïàðàìåòð À íå ÿâëÿåòñÿ ÷èñëîì", "Îøèáêà ââîäà äàííûõ", MessageBoxButtons::OK, MessageBoxIcon::Exclamation);
 		//âîçâðàò ôîêóñà òåêñòîâîìó ïîëþ this->textBox1->Focus();
-	}
-}
-private: System::Void textBox2_Leave(System::Object^ sender, System::EventArgs^ e) {
-	int l, t, k; bool a = true; String^ str; str = textBox2->Text;
-	l = str->Length;
-	//èíäåêñ ñèìâîëà, ñ êîòîðûì ðàáîòàåì
-	t = 0;
-	//êîëëè÷åñòâî çàïÿòûõ â ñòðîêå (äàáû èçáåæàòü âàðèàíòà 0, 2384, 1254, 1251 – ýòî íå ÷èñëî) 
-	k = 0;
-	//äâèãàåì èíäåêñàòîð, åñëè íàøå ÷èñëî îòðèöàòåëüíîå 
-	if (str[t] == '-') t++;
-	//÷èñëî íå ìîæåò íà÷èíàòüñÿ ñ çàïÿòîé 
-	if (str[t] == ',') a = false; while (t < l)
-	{
-		if (str[t] == ',')
-			//åñëè çàïÿòàÿ ñòîèò ïîñëåäíèì ñèìâîëîì èëè çàïÿòàÿ óæå áûëà íàéäåíà
-
-		{
-			if (t == l - 1 || k > 0) a = false; k++;
-		}
-
-		//åñëè t-ûé ñèìâîë íå ëåæèò â äèàïàçîíå îò '0' äî '9'
-
-		else if (str[t] < '0' || str[t]>'9') a = false; t++;
-	}
-	if (a == false)
-	{
-		MessageBox::Show("ïàðàìåòð Õ íå ÿâëÿåòñÿ ÷èñëîì", "Îøèáêà ââîäà äàííûõ", MessageBoxButtons::OK, MessageBoxIcon::Exclamation);
-		//âîçâðàò ôîêóñà òåêñòîâîìó ïîëþ this->textBox2->Focus();
 	}
 }
 };
