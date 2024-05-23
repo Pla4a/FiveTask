@@ -2,6 +2,7 @@
 
 using namespace System;
 using namespace System::Windows::Forms;
+using namespace System::Windows::Forms::DataVisualization::Charting;
 
 [STAThreadAttribute]
 int main(array<String^>^ args) {
